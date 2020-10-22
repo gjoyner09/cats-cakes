@@ -1,0 +1,710 @@
+let loops = 1;
+let frameHold = 3;
+let termsHold = 3;
+const maxHeadlineHeight = parseInt(
+  getComputedStyle(document.body).getPropertyValue('--max-headline-height')
+);
+const ad = myFT.$('#container');
+
+// WAIT FOR ALL ELEMENTS TO LOAD AND INITIATE THE BANNER
+let ftLoader = {
+  toload: [
+    'instantads',
+    'backgroundImg',
+    'logo',
+    'beamWideGreenImg',
+    'fonts',
+    'frame1_topImg',
+    'frame1_middleImg',
+    'frame2_topImg',
+    'frame2_middleImg',
+    'frame3_topImg',
+    'frame3_middleImg',
+    'frame4_topImg',
+    'frame4_middleImg'
+  ],
+  loaded: [],
+  ticker: setInterval(function () {
+    if (ftLoader.toload.length !== ftLoader.loaded.length) return;
+    clearInterval(ftLoader.ticker);
+    init();
+  }, 500)
+};
+
+// LOAD IMAGES
+myFT.on('instantads', function () {
+  const dynamicCT = myFT.instantAds.dynamic_clickthrough.trim();
+  myFT.applyClickTag(ad, 1, dynamicCT);
+
+  let bgImage = new Image();
+  bgImage.src = myFT.instantAds.background_image;
+  backgroundImage.style.backgroundImage = 'url(' + bgImage.src + ')';
+  bgImage.onload = function () {
+    ftLoader.loaded.push('backgroundImg');
+  };
+
+  let logo = new Image();
+  logo.src = 'img/728x90_logo.png';
+  overlayLogo.src = logo.src;
+  logo.onload = function () {
+    ftLoader.loaded.push('logo');
+  };
+
+  let beamWideGreenImg = new Image();
+  beamWideGreenImg.src = 'img/728x90_beam_widegreen.png';
+  beamWideGreen.style.backgroundImage = 'url(' + beamWideGreenImg.src + ')';
+  beamWideGreenImg.onload = function () {
+    ftLoader.loaded.push('beamWideGreenImg');
+  };
+
+  let frame1_topImg = new Image();
+  frame1_topImg.src = myFT.instantAds.f1_top_icon;
+  frame1_top_icon.src = frame1_topImg.src;
+  frame1_topImg.onload = function () {
+    ftLoader.loaded.push('frame1_topImg');
+  };
+
+  let frame1_middleImg = new Image();
+  frame1_middleImg.src = myFT.instantAds.f1_middle_icon;
+  frame1_middle_icon.src = frame1_middleImg.src;
+  frame1_middleImg.onload = function () {
+    ftLoader.loaded.push('frame1_middleImg');
+  };
+
+  let frame2_topImg = new Image();
+  frame2_topImg.src = myFT.instantAds.f2_top_icon;
+  frame2_top_icon.src = frame2_topImg.src;
+  frame2_topImg.onload = function (e) {
+    ftLoader.loaded.push('frame2_topImg');
+  };
+
+  let frame2_middleImg = new Image();
+  frame2_middleImg.src = myFT.instantAds.f2_middle_icon;
+  frame2_middle_icon.src = frame2_middleImg.src;
+  frame2_middleImg.onload = function (e) {
+    ftLoader.loaded.push('frame2_middleImg');
+  };
+
+  let frame3_topImg = new Image();
+  frame3_topImg.src = myFT.instantAds.f3_top_icon;
+  frame3_top_icon.src = frame3_topImg.src;
+  frame3_topImg.onload = function (e) {
+    ftLoader.loaded.push('frame3_topImg');
+  };
+
+  let frame3_middleImg = new Image();
+  frame3_middleImg.src = myFT.instantAds.f3_middle_icon;
+  frame3_middle_icon.src = frame3_middleImg.src;
+  frame3_middleImg.onload = function (e) {
+    ftLoader.loaded.push('frame3_middleImg');
+  };
+
+  let frame4_topImg = new Image();
+  frame4_topImg.src = myFT.instantAds.f4_top_icon;
+  frame4_top_icon.src = frame4_topImg.src;
+  frame4_topImg.onload = function (e) {
+    ftLoader.loaded.push('frame4_topImg');
+  };
+
+  let frame4_middleImg = new Image();
+  frame4_middleImg.src = myFT.instantAds.f4_middle_icon;
+  frame4_middle_icon.src = frame4_middleImg.src;
+  frame4_middleImg.onload = function (e) {
+    ftLoader.loaded.push('frame4_middleImg');
+  };
+
+  ftLoader.loaded.push('instantads');
+});
+
+// LOAD THE FONTS
+WebFont.load({
+  custom: { families: ['MuseoSansRounded500', 'MuseoSansRounded700'] },
+  active: function () {
+    ftLoader.loaded.push('fonts');
+  }
+});
+
+// CALL ALL SETUP FUNCTIONS AND START THE BANNER
+function init() {
+  let loopCounter = 0;
+
+  const tl = gsap.timeline({ defaults: { duration: 0.5 } });
+  const pauseIfAtLoopLimit = function () {
+    if (loopCounter >= loops) {
+      tl.pause();
+      console.log('Pausing..');
+      return;
+    }
+
+    loopCounter++;
+
+    tl.to(['#container', '#cta', '#terms'], {
+      delay: frameHold,
+      opacity: 0
+    });
+    tl.call(function () {
+      tl.restart();
+    });
+    console.log('Restarting..', loopCounter, loops);
+  };
+
+  assignVariables();
+  textResize([headline1, headline2, headline3, headline4]);
+  setupDisclaimer(tl);
+  applyProofPointStyles();
+  applySublineStyles();
+  startAnimation(tl, pauseIfAtLoopLimit);
+}
+
+// Assign properties from the Flashtalking manifest.js file to the DOM elements
+function assignVariables() {
+  headline1.innerHTML = myFT.instantAds.f1_headline;
+  headline2.innerHTML = myFT.instantAds.f2_headline;
+  headline3.innerHTML = myFT.instantAds.f3_headline;
+  headline4.innerHTML = myFT.instantAds.f4_headline;
+
+  frame1_headline.innerHTML = myFT.instantAds.f1_headline;
+  frame2_headline.innerHTML = myFT.instantAds.f2_headline;
+  frame3_headline.innerHTML = myFT.instantAds.f3_headline;
+  frame4_headline.innerHTML = myFT.instantAds.f4_headline;
+
+  subline1.innerHTML = myFT.instantAds.f1_subline;
+  subline2.innerHTML = myFT.instantAds.f2_subline;
+  subline3.innerHTML = myFT.instantAds.f3_subline;
+  subline4.innerHTML = myFT.instantAds.f4_subline;
+
+  //PROOF POINTS
+  splitProofPointLines(
+    myFT.instantAds.f1_top_proof_point,
+    frame1_top_proof_point_large,
+    frame1_top_proof_point_small
+  );
+  splitProofPointLines(
+    myFT.instantAds.f1_middle_proof_point,
+    frame1_middle_proof_point_large,
+    frame1_middle_proof_point_small
+  );
+  splitProofPointLines(
+    myFT.instantAds.f1_bottom_proof_point,
+    frame1_bottom_proof_point_large,
+    frame1_bottom_proof_point_small
+  );
+
+  splitProofPointLines(
+    myFT.instantAds.f2_top_proof_point,
+    frame2_top_proof_point_large,
+    frame2_top_proof_point_small
+  );
+  splitProofPointLines(
+    myFT.instantAds.f2_middle_proof_point,
+    frame2_middle_proof_point_large,
+    frame2_middle_proof_point_small
+  );
+  splitProofPointLines(
+    myFT.instantAds.f2_bottom_proof_point,
+    frame2_bottom_proof_point_large,
+    frame2_bottom_proof_point_small
+  );
+
+  splitProofPointLines(
+    myFT.instantAds.f3_top_proof_point,
+    frame3_top_proof_point_large,
+    frame3_top_proof_point_small
+  );
+  splitProofPointLines(
+    myFT.instantAds.f3_middle_proof_point,
+    frame3_middle_proof_point_large,
+    frame3_middle_proof_point_small
+  );
+  splitProofPointLines(
+    myFT.instantAds.f3_bottom_proof_point,
+    frame3_bottom_proof_point_large,
+    frame3_bottom_proof_point_small
+  );
+
+  splitProofPointLines(
+    myFT.instantAds.f4_top_proof_point,
+    frame4_top_proof_point_large,
+    frame4_top_proof_point_small
+  );
+  splitProofPointLines(
+    myFT.instantAds.f4_middle_proof_point,
+    frame4_middle_proof_point_large,
+    frame4_middle_proof_point_small
+  );
+  splitProofPointLines(
+    myFT.instantAds.f4_bottom_proof_point,
+    frame4_bottom_proof_point_large,
+    frame4_bottom_proof_point_small
+  );
+
+  // Misc
+  cta.innerHTML = myFT.instantAds.cta_copy;
+  cta.style.backgroundColor = myFT.instantAds.cta_colour;
+  terms.innerHTML = myFT.instantAds.disclaimer_button;
+  terms.style.color = myFT.instantAds.disclaimer_font_colour;
+  termsFrameText.innerHTML = myFT.instantAds.terms;
+  termsFrameText.style.fontSize = myFT.instantAds.terms_font_size + 'px';
+
+  termsHold = isNaN(parseInt(myFT.instantAds.terms_scroll_time))
+    ? 3
+    : parseInt(myFT.instantAds.terms_scroll_time);
+  loops = isNaN(parseInt(myFT.instantAds.loops))
+    ? 1
+    : parseInt(myFT.instantAds.loops);
+}
+
+// Take the single property from manifest.js and split into separate variables and assign to the relevant DOM elements
+function splitProofPointLines(flashtalkingVar, large, small) {
+  const sentenceArr = flashtalkingVar.trim().split(' ');
+  const firstWord = sentenceArr[0];
+  const restOfSentence = sentenceArr.slice(1).join(' ');
+  large.innerHTML = firstWord;
+  small.innerHTML = restOfSentence;
+}
+
+// Set the padding of the proof points if there isn't an icon, and set the small text to 5px to the right of the large text. This also moves the CTA down slightly if there's three lines of proof points for any frame of the banner
+function applyProofPointStyles() {
+  if (myFT.instantAds.f1_top_icon.includes('blank.png')) {
+    frame1_top_proof_point_large.style.left = '10px';
+  }
+
+  if (myFT.instantAds.f1_middle_icon.includes('blank.png')) {
+    frame1_middle_proof_point_large.style.left = '10px';
+  }
+
+  frame1_top_proof_point_small.style.left =
+    frame1_top_proof_point_large.getBoundingClientRect().right + 5 + 'px';
+  frame1_middle_proof_point_small.style.left =
+    frame1_middle_proof_point_large.getBoundingClientRect().right + 5 + 'px';
+  frame1_bottom_proof_point_small.style.left =
+    frame1_bottom_proof_point_large.getBoundingClientRect().right + 5 + 'px';
+
+  if (myFT.instantAds.f2_top_icon.includes('blank.png')) {
+    frame2_top_proof_point_large.style.left = '10px';
+  }
+
+  if (myFT.instantAds.f2_middle_icon.includes('blank.png')) {
+    frame2_middle_proof_point_large.style.left = '10px';
+  }
+
+  frame2_top_proof_point_small.style.left =
+    frame2_top_proof_point_large.getBoundingClientRect().right + 5 + 'px';
+  frame2_middle_proof_point_small.style.left =
+    frame2_middle_proof_point_large.getBoundingClientRect().right + 5 + 'px';
+  frame2_bottom_proof_point_small.style.left =
+    frame2_bottom_proof_point_large.getBoundingClientRect().right + 5 + 'px';
+
+  if (myFT.instantAds.f3_top_icon.includes('blank.png')) {
+    frame3_top_proof_point_large.style.left = '10px';
+  }
+
+  if (myFT.instantAds.f3_middle_icon.includes('blank.png')) {
+    frame3_middle_proof_point_large.style.left = '10px';
+  }
+
+  frame3_top_proof_point_small.style.left =
+    frame3_top_proof_point_large.getBoundingClientRect().right + 5 + 'px';
+  frame3_middle_proof_point_small.style.left =
+    frame3_middle_proof_point_large.getBoundingClientRect().right + 5 + 'px';
+  frame3_bottom_proof_point_small.style.left =
+    frame3_bottom_proof_point_large.getBoundingClientRect().right + 5 + 'px';
+
+  if (myFT.instantAds.f4_top_icon.includes('blank.png')) {
+    frame4_top_proof_point_large.style.left = '10px';
+  }
+
+  if (myFT.instantAds.f4_middle_icon.includes('blank.png')) {
+    frame4_middle_proof_point_large.style.left = '10px';
+  }
+
+  frame4_top_proof_point_small.style.left =
+    frame4_top_proof_point_large.getBoundingClientRect().right + 5 + 'px';
+  frame4_middle_proof_point_small.style.left =
+    frame4_middle_proof_point_large.getBoundingClientRect().right + 5 + 'px';
+  frame4_bottom_proof_point_small.style.left =
+    frame4_bottom_proof_point_large.getBoundingClientRect().right + 5 + 'px';
+}
+
+function applySublineStyles() {
+  if (myFT.instantAds.f1_style === 'subline') {
+    headline1.style.fontSize = '22px';
+    headline1.style.top = '15px';
+    headline1.style.right = '15px';
+    subline1.style.right = '15px';
+    headline1.style.fontWeight = 'bold';
+    subline1.style.top = headline1.getBoundingClientRect().bottom + 5 + 'px';
+  }
+  if (myFT.instantAds.f2_style === 'subline') {
+    headline2.style.top = '15px';
+    headline2.style.left = '12px';
+    headline2.style.fontSize = '22px';
+    headline2.style.fontWeight = 'bold';
+    subline2.style.top = headline2.getBoundingClientRect().bottom + 5 + 'px';
+  }
+  if (myFT.instantAds.f3_style === 'subline') {
+    headline3.style.top = '15px';
+    headline3.style.left = '12px';
+    headline3.style.fontSize = '22px';
+    headline3.style.fontWeight = 'bold';
+    subline3.style.top = headline3.getBoundingClientRect().bottom + 5 + 'px';
+  }
+  if (myFT.instantAds.f4_style === 'subline') {
+    headline4.style.top = '15px';
+    headline4.style.left = '12px';
+    headline4.style.fontSize = '22px';
+    headline4.style.fontWeight = 'bold';
+    subline4.style.top = headline4.getBoundingClientRect().bottom + 5 + 'px';
+  }
+}
+
+// Check whether the headlines are taller than the max height and resize the text if so
+function textResize(targetArr) {
+  targetArr.forEach(function (item) {
+    while (item.clientHeight > maxHeadlineHeight) {
+      item.style.fontSize =
+        parseInt(getComputedStyle(item).fontSize) - 1 + 'px';
+    }
+  });
+}
+
+// Check which disclaimer type set in manifest.js and setup the banner accordingly
+function setupDisclaimer(tl) {
+  if (myFT.instantAds.disclaimer_button.trim() === '') {
+    cta.style.bottom = '28px';
+  }
+
+  if (myFT.instantAds.disclaimer_style.toLowerCase() === 'button') {
+    terms.style.textDecoration = 'underline';
+
+    terms.innerHTML =
+      '<img id="disclaimerArrow" src="./img/white_arrow.png"></img>' +
+      myFT.instantAds.disclaimer_button;
+
+    terms.addEventListener('click', function () {
+      tl.pause();
+      gsap.to('#terms', { opacity: 0, duration: 0.1 });
+      gsap.to('#termsFrame', { bottom: 0 });
+      gsap.to('#termsFrameClose', { opacity: 1, delay: 0.45 });
+    });
+
+    termsFrameClose.addEventListener('click', function () {
+      tl.play();
+      gsap.to('#termsFrameClose', { opacity: 0, duration: 0.1 });
+      gsap.to('#termsFrame', { bottom: -100, delay: 0.15 });
+      gsap.to('#terms', { opacity: 1, duration: 0.1, delay: 0.3 });
+    });
+  } else if (myFT.instantAds.disclaimer_style.toLowerCase() === 'frame') {
+    termsFrame.style.padding = '10px';
+    termsFrame.style.bottom = 0;
+    termsFrame.style.opacity = 0;
+    termsFrame.style.display = 'none';
+    termsFrameClose.style.display = 'none';
+  }
+}
+
+function startAnimation(tl, shouldContinue) {
+  tl.set(beamWideGreen, { rotation: -180 }).to('#container', { opacity: 1 });
+
+  // ==============
+  // BACKGROUND IMAGE MOVEMENT
+  // ==============
+  if (
+    myFT.instantAds.image_movement.toLowerCase() === 'left' ||
+    myFT.instantAds.image_movement.toLowerCase() === 'right'
+  ) {
+    const bgImgMovementAmount =
+      myFT.instantAds.image_movement.toLowerCase() === 'left' ? -50 : 50;
+    backgroundImage.style.left = bgImgMovementAmount < 0 ? '-1px' : '-50px'; //adjust the position of the background depending on which direction we're moving it
+    tl.to('#backgroundImage', {
+      left: '+=' + bgImgMovementAmount,
+      ease: 'power2.inOut',
+      duration: 2
+    });
+  }
+
+  // ==============
+  // FRAME 1
+  // ==============
+  // HEADLINE OR SUBLINE STYLE
+  // -------------------------
+  if (
+    myFT.instantAds.f1_style === 'headline' ||
+    myFT.instantAds.f1_style === 'subline'
+  ) {
+    // There is no second frame, animate this as the only frame
+    if (myFT.instantAds.f2_headline === '') {
+      headline1.style.textAlign = 'left';
+      headline1.style.left = '15px';
+      subline1.style.textAlign = 'left';
+      subline1.style.left = '15px';
+      beamWideGreen.style.display = 'none';
+
+      tl.to('#headline1', { delay: 0.25, opacity: 1 }, '-=1.5');
+
+      // ANIMATE ON SUBLINE
+      if (myFT.instantAds.f1_style === 'subline') {
+        tl.to('#subline1', { opacity: 1 }, '-=0.5');
+      }
+      tl.to('#cta', { opacity: 1 }, '-=0.5');
+      tl.to('#terms', { opacity: 1 });
+    }
+    // There is a second frame
+    else {
+      tl.to(beamWideGreen, {
+        rotation: 0,
+        ease: 'elastic.out(0.9, 1)',
+        scale: 1.05,
+        duration: 2
+      }).to('#headline1', { delay: 0.5, opacity: 1 }, '-=1.5');
+
+      if (myFT.instantAds.f1_style === 'subline') {
+        tl.to('#subline1', { opacity: 1 }, '-=0.5');
+      }
+    }
+  }
+
+  // PROOF STYLE
+  // -------------------------
+  else if (myFT.instantAds.f1_style === 'proof') {
+    tl.to(beamWideGreen, {
+      rotation: 0,
+      ease: 'elastic.out(0.9, 1)',
+      scale: 1.05,
+      duration: 2
+    }).to('#proofFrame1', { delay: 0.25, opacity: 1 }, '-=1.5');
+
+    if (myFT.instantAds.f1_bottom_proof_point !== '') {
+      tl.to(
+        [
+          '#frame1_top_icon',
+          '#frame1_top_proof_point_large',
+          '#frame1_top_proof_point_small',
+          '#frame1_middle_icon',
+          '#frame1_middle_proof_point_large',
+          '#frame1_middle_proof_point_small'
+        ],
+        { delay: frameHold, opacity: 0 }
+      ).to(
+        [
+          '#frame1_bottom_proof_point_large',
+          '#frame1_bottom_proof_point_small'
+        ],
+        { opacity: 1 }
+      );
+    }
+
+    tl.to('#cta', { opacity: 1 }, '-=0.5');
+    tl.to('#terms', { opacity: 1 });
+  }
+
+  // ==============
+  // FRAME 2
+  // ==============
+  // Make previous frame go away
+  if (myFT.instantAds.f2_headline !== '') {
+    tl.to(['#headline1', '#subline1', '#proofFrame1'], {
+      delay: frameHold,
+      opacity: 0
+    });
+
+    // HEADLINE OR SUBLINE STYLE
+    // -------------------------
+    if (
+      myFT.instantAds.f2_style === 'headline' ||
+      myFT.instantAds.f2_style === 'subline'
+    ) {
+      tl.to('#headline2', { delay: 0.25, opacity: 1 });
+
+      if (myFT.instantAds.f2_style === 'subline') {
+        tl.to('#subline2', { opacity: 1 }, '-=0.5');
+      }
+    }
+
+    // PROOF STYLE
+    // -------------------------
+    else if (myFT.instantAds.f2_style === 'proof') {
+      tl.to('#proofFrame2', { delay: 0.25, opacity: 1 });
+      tl.to('#cta', { opacity: 1 }, '-=0.5');
+      tl.to('#terms', { opacity: 1 });
+
+      if (myFT.instantAds.f2_bottom_proof_point !== '') {
+        tl.to(
+          [
+            '#frame2_top_icon',
+            '#frame2_top_proof_point_large',
+            '#frame2_top_proof_point_small',
+            '#frame2_middle_icon',
+            '#frame2_middle_proof_point_large',
+            '#frame2_middle_proof_point_small'
+          ],
+          { delay: frameHold, opacity: 0 }
+        ).to(
+          [
+            '#frame2_bottom_proof_point_large',
+            '#frame2_bottom_proof_point_small'
+          ],
+          { opacity: 1 }
+        );
+      }
+    }
+
+    tl.to('#cta', { opacity: 1 }, '-=0.5');
+    tl.to('#terms', { opacity: 1 });
+  }
+
+  // ==============
+  // FRAME 3
+  // ==============
+  if (myFT.instantAds.f3_headline !== '') {
+    tl.to(['#headline2', '#subline2', '#proofFrame2'], {
+      delay: frameHold,
+      opacity: 0
+    });
+
+    // HEADLINE OR SUBLINE STYLE
+    // -------------------------
+    if (
+      myFT.instantAds.f3_style === 'headline' ||
+      myFT.instantAds.f3_style === 'subline'
+    ) {
+      tl.to('#headline3', { delay: 0.25, opacity: 1 });
+
+      if (myFT.instantAds.f3_style === 'subline') {
+        tl.to('#subline3', { opacity: 1 });
+      }
+    }
+
+    // PROOF STYLE
+    // -------------------------
+    else if (myFT.instantAds.f3_style === 'proof') {
+      tl.to('#proofFrame3', { delay: 0.25, opacity: 1 });
+
+      if (myFT.instantAds.f3_bottom_proof_point !== '') {
+        tl.to(
+          [
+            '#frame3_top_icon',
+            '#frame3_top_proof_point_large',
+            '#frame3_top_proof_point_small',
+            '#frame3_middle_icon',
+            '#frame3_middle_proof_point_large',
+            '#frame3_middle_proof_point_small'
+          ],
+          { delay: frameHold, opacity: 0 }
+        ).to(
+          [
+            '#frame3_bottom_proof_point_large',
+            '#frame3_bottom_proof_point_small'
+          ],
+          { opacity: 1 }
+        );
+      }
+
+      tl.to('#cta', { opacity: 1 }, '-=0.5');
+    }
+  }
+
+  // ==============
+  // FRAME 4
+  // ==============
+  if (myFT.instantAds.f4_headline !== '') {
+    tl.to(['#headline3', '#subline3', '#proofFrame3'], {
+      delay: frameHold,
+      opacity: 0
+    });
+
+    // HEADLINE OR SUBLINE STYLE
+    // -------------------------
+    if (
+      myFT.instantAds.f4_style === 'headline' ||
+      myFT.instantAds.f4_style === 'subline'
+    ) {
+      tl.to('#headline4', { delay: 0.25, opacity: 1 });
+
+      if (myFT.instantAds.f4_style === 'subline') {
+        tl.to('#subline4', { opacity: 1 });
+      }
+    }
+
+    // PROOF STYLE
+    // -------------------------
+    else if (myFT.instantAds.f4_style === 'proof') {
+      tl.to('#proofFrame4', { delay: 0.25, opacity: 1 });
+
+      if (myFT.instantAds.f4_bottom_proof_point !== '') {
+        tl.to(
+          [
+            '#frame4_top_icon',
+            '#frame4_top_proof_point_large',
+            '#frame4_top_proof_point_small',
+            '#frame4_middle_icon',
+            '#frame4_middle_proof_point_large',
+            '#frame4_middle_proof_point_small'
+          ],
+          { delay: frameHold, opacity: 0 }
+        ).to(
+          [
+            '#frame4_bottom_proof_point_large',
+            '#frame4_bottom_proof_point_small'
+          ],
+          { opacity: 1 }
+        );
+      }
+
+      tl.to('#cta', { opacity: 1 }, '-=0.5');
+    }
+  }
+
+  // ==============
+  // TERMS FRAME
+  // ==============
+  if (myFT.instantAds.disclaimer_style === 'frame') {
+    tl.to('#termsFrame', { display: 'block' })
+      .to('#termsFrame', { delay: frameHold, opacity: 1 })
+      .to('#terms', { opacity: 0 }, '-=0.5')
+      .to('#termsFrameText', { delay: 1, bottom: 0, duration: termsHold })
+      .to('#termsFrame', { delay: frameHold, opacity: 0 })
+      .to('#terms', { opacity: 1 }, '-=0.5')
+      .to('#termsFrame', { display: 'none' });
+  }
+
+  tl.call(shouldContinue);
+}
+
+// When the mouse is over the banner, apply hover state to the CTA
+document.querySelector('#container').addEventListener('mouseover', function () {
+  cta.classList.add('ctaHover');
+});
+
+// When the mouse leaves the banner, remove the hover state from the CTA
+document
+  .querySelector('#container')
+  .addEventListener('mouseleave', function () {
+    cta.classList.remove('ctaHover');
+  });
+
+// ==========================
+// CURSOR GLOW EFFECT
+// ==========================
+// Follow the mouse with the glow
+window.addEventListener('mousemove', function (e) {
+  var center = cursorGlowDiv.clientWidth / 2;
+  setTimeout(function () {
+    cursorGlowDiv.style.left = e.clientX - center + 'px';
+    cursorGlowDiv.style.top = e.clientY - center + 'px';
+  }, 75);
+});
+
+// Fade in the glow effect when mouse enters the banner
+document
+  .getElementById('container')
+  .addEventListener('mouseenter', function () {
+    gsap.to(cursorGlowDiv, { opacity: 1, duration: 0.5 });
+  });
+
+// Fade out the glow effect when mouse exits the banner
+document
+  .getElementById('container')
+  .addEventListener('mouseleave', function () {
+    gsap.to(cursorGlowDiv, { opacity: 0, duration: 0.5 });
+  });

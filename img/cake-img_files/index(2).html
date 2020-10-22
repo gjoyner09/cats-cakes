@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<!-- saved from url=(0067)https://s0.2mdn.net/4001708/1602296741853/RET0203_728x90/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="ad.size" content="width=728,height=90">
+<!-- <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="X-UA-Compatible" content="IE=11">
+
+<link rel="stylesheet" type="text/css" href="./foxtelFonts.css">
+<link rel="stylesheet" type="text/css" href="./style(3).css">
+
+
+<script>
+  var clickTag = "https://www.foxtel.com.au/now/index.html";
+</script>
+
+<style>
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  outline: 0;
+  padding: 0;
+  margin: 0;
+  font-family: 'foxtel_textbold', arial;
+  font-variant-ligatures: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #ffffff;
+  color: white;
+}
+
+body {
+  overflow: hidden;
+}
+
+/* common */
+
+.banner {
+  width: 728px;
+  height: 90px;
+  position:absolute;
+  left: 0px;
+}
+
+#banner {
+  border: 1px solid #333333;
+  background-color: #f2410a;
+}
+
+#banner, .frame {
+  position:absolute;
+  overflow: hidden;
+  left:0px;
+  top:0px;
+  display:none;
+}
+
+#bg-exit {
+  position:absolute;
+  cursor: pointer;
+  z-index: 1000;
+  top: 0;
+  left:0;
+}
+
+.banner-border{
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+} 
+
+.svg-mask-wrapper {
+  position: absolute;
+}
+
+.frame1{
+  z-index: 4;
+}
+.frame2{
+  position: relative;
+  z-index: 3;
+}
+
+.frame3{
+  /* position: relative; */
+  z-index: 2;
+}
+.frame4{
+  /* position: relative; */
+  z-index: 1;
+}
+
+.common{
+  z-index: 10;
+}
+
+.frame5{
+  background-color: #f2410a;
+}
+
+
+
+</style>
+
+<script type="text/javascript">
+    
+  (function() {
+    var MAX_URL_PARAM_LENGTH = 34;
+    var CLICK_X_URL_KEY = 'nx';
+    var CLICK_Y_URL_KEY = 'ny';
+    var CREATIVE_DIMENSIONS_KEY = 'dim';
+    var AD_URL_PARAM = '&adurl=';
+
+    var relegateNavigation = '';
+    var urlParamMap = {};
+
+    urlParamMap[CLICK_X_URL_KEY] = null;
+    urlParamMap[CLICK_Y_URL_KEY] = null;
+    urlParamMap[CREATIVE_DIMENSIONS_KEY] = null;
+
+    var handleClickTagMessage = function(e) {
+      try {
+        var eventData = JSON.parse(e.data);
+      } catch (err) {
+        return;
+      }
+      if (eventData.isInitClickTag) {
+        if (eventData.clickTags) {
+          for (var i = 0; i < eventData.clickTags.length; i++) {
+            var clkTag = eventData.clickTags[i];
+            window[clkTag.name] = clkTag.url;
+          }
+        } else if (eventData.clickTag) {
+          window.clickTag = eventData.clickTag;
+        }
+        relegateNavigation = eventData.relegateNavigation;
+      }
+    };
+
+    var storeClickCoordinates = function(e) {
+      urlParamMap[CLICK_X_URL_KEY] = Math.round(e.clientX);
+      urlParamMap[CLICK_Y_URL_KEY] = Math.round(e.clientY);
+    };
+
+    var getCreativeDimensions = function() {
+      return window.innerWidth + 'x' + window.innerHeight;
+    }
+
+    var getExitClickParams = function(e) {
+      urlParamMap[CREATIVE_DIMENSIONS_KEY] = getCreativeDimensions();
+
+      var exitParams = '';
+      for (var key in urlParamMap) {
+        exitParams += '&' + key + '=';
+        if (urlParamMap[key] !== null) {
+          exitParams += urlParamMap[key];
+        }
+      }
+      return exitParams;
+    }
+
+    var appendExitClickParams = function(url) {
+      var adUrlIndex = url.toLowerCase().indexOf(AD_URL_PARAM);
+      var paramsToBeAdded = getExitClickParams();
+      if (adUrlIndex > -1 && paramsToBeAdded.length <= MAX_URL_PARAM_LENGTH) {
+        url = url.substr(0, adUrlIndex) + paramsToBeAdded +
+          url.substr(adUrlIndex);
+      };
+      return url;
+    };
+
+    if (open.call) {
+      window.open = function(open) {
+        return function(url, name, features) {
+          url = appendExitClickParams(url);
+          if (relegateNavigation === 'parent') {
+            var message = {'clickTag': url, 'isPostClickTag': true};
+            parent.postMessage(JSON.stringify(message), '*');
+          } else {
+            var args = [url, name];
+            if (features) {
+              args.push(features);
+            }
+            open.apply(window, args);
+          }
+        };
+      }(window.open);
+    }
+
+    if (window.addEventListener) {
+      window.addEventListener(
+          'message', handleClickTagMessage, false);
+      window.addEventListener('mousedown', storeClickCoordinates, true);
+    } else {
+      window.attachEvent('onmessage', handleClickTagMessage);
+    }
+  })();
+    
+  </script></head>
+<body>
+  <div id="banner" class="banner" style="display: block; opacity: 1;">
+
+    <div class="frame1 frame banner" style="display: block;">
+      <div class="svg-mask-wrapper">
+        <svg width="728" height="90" viewBox="0 0 728 90" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+          <defs>
+            <mask id="svg-maskff1" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse">
+                <rect id="svg-mask-poly1" x="1092" y="-971" width="1047" height="2700" transform="rotate(15)" style="fill: #fff"></rect>
+            </mask>
+          </defs>
+          
+          <g mask="url(#svg-maskff1)">
+
+            <rect class="rect" x="0" y="0" width="100%" height="100%" transform="rotate(0)" style="fill: #f2410a"></rect>            
+            <image id="img01" width="100%" height="100%" y="0" x="0" xlink:href="img01.jpg" transform="matrix(1,0,0,1,0,0)"></image>
+            <image id="disc01" width="100%" height="100%" y="0" x="0" xlink:href="disc01.png" transform="matrix(1,0,0,1,0,0)"></image>
+            <!-- <image class="ribbon ribbon-1" width="100%" height="100%" y="0" x="0" xlink:href="ribbon01.png" transform="matrix(1,0,0,1,0,0)"/> -->
+
+            <g class="unselectable copy copy1" transform="translate(10 25)">            
+              <text class="line line1  " y="0" x="0" data-svg-origin="0 -19" transform="matrix(1,0,0,1,0,0)">New HBO</text>
+              <text class="line line2  " y="23" x="0" data-svg-origin="0 4" transform="matrix(1,0,0,1,0,0)">Documentary Series</text>
+            </g>
+
+          </g>
+
+        </svg>
+      </div>
+    </div>
+
+    <div class="frame2 frame banner" style="display: block;">
+
+      <div class="img-wrapper frame2-bg">
+        <div class="svg-mask-wrapper">  
+          <svg width="728" height="90" viewBox="0 0 728 90" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+            <defs>
+              <mask id="svg-maskff2" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse">
+                  <rect id="svg-mask-poly2" x="1092" y="-971" width="1047" height="2700" transform="rotate(15)" style="fill: #fff"></rect>
+              </mask>
+            </defs>
+
+            <g mask="url(#svg-maskff2)">
+             
+              <image id="img02" width="100%" height="100%" y="0" x="0" xlink:href="img02.jpg" transform="matrix(1,0,0,1,0,0)"></image>
+              <image id="disc02" width="100%" height="100%" y="0" x="0" xlink:href="disc02.png" transform="matrix(1,0,0,1,0,0)"></image>
+              <!-- <image class="ribbon ribbon-1" width="100%" height="100%" y="0" x="0" xlink:href="ribbon02.png" transform="matrix(1,0,0,1,0,0)"/> -->
+            
+
+              <g class="unselectable copy copy1" transform="translate(10 25)">            
+                <text class="line line1  " y="0" x="0" style="font-size: 18px;" data-svg-origin="0 -16" transform="matrix(1,0,0,1,0,0)">The inspiring and unique personal</text>
+                <text class="line line2  " y="23" x="0" style="font-size: 18px;" data-svg-origin="-2 7" transform="matrix(1,0,0,1,0,0)"> journey of Ruth Bader Ginsburg</text>
+              </g>
+
+            </g>
+
+          </svg> 
+        </div>
+      </div>
+    </div>
+
+    <div class="frame3 frame banner" style="display: block;">
+      <div class="svg-mask-wrapper">
+        <svg width="728" height="90" viewBox="0 0 728 90" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <defs>
+            <mask id="svg-maskff3" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse">
+                <rect id="svg-mask-poly3" x="1092" y="-971" width="1047" height="2700" transform="rotate(15)" style="fill: #fff"></rect>
+            </mask>
+          </defs>
+          
+          <g mask="url(#svg-maskff3)">
+          
+            <image id="img03" width="100%" height="100%" y="0" x="0" xlink:href="img03.jpg" transform="matrix(1,0,0,1,0,0)"></image>
+            <image id="disc03" width="100%" height="100%" y="0" x="0" xlink:href="disc03.png" transform="matrix(1,0,0,1,0,0)"></image>
+            <!-- <image class="ribbon ribbon-1" width="100%" height="100%" y="0" x="0" xlink:href="ribbon02.png" transform="matrix(1,0,0,1,0,0)"/> -->
+  
+            <g class="unselectable copy copy1" transform="translate(10 25)">            
+              <text class="line line1  " y="0" x="0" data-svg-origin="0 -19" transform="matrix(1,0,0,1,0,0)">Brittany Murphy</text>
+              <text class="line line1  " y="23" x="0" data-svg-origin="-1 4" transform="matrix(1,0,0,1,0,0)">An ID Mystery</text>
+            </g>
+
+          </g>
+
+        </svg>
+      </div>
+    </div>
+
+    <div class="frame4 frame banner" style="display: block;">
+      <div class="svg-mask-wrapper">
+        <svg width="728" height="90" viewBox="0 0 728 90" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <defs>
+            <mask id="svg-maskff4" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse">
+                <rect id="svg-mask-poly4" x="0" y="-971" width="1047" height="2700" transform="rotate(15)" style="fill: #fff"></rect>
+            </mask>
+          </defs>
+          
+          <g mask="url(#svg-maskff4)">
+        
+            <image id="img04" width="100%" height="100%" y="0" x="0" xlink:href="img04.png" transform="matrix(1,0,0,1,0,0)"></image>
+            <image id="disc02" width="100%" height="100%" y="0" x="0" xlink:href="disc04.png" transform="matrix(1,0,0,1,0,0)"></image>
+            <image class="ribbon ribbon-1" width="100%" height="100%" y="0" x="0" xlink:href="ribbon01.png" transform="matrix(1,0,0,1,0,0)" data-svg-origin="0 0"></image>
+  
+            <!-- <g class="unselectable copy copy1" transform="translate(10 25)">
+              <text class="line line1  " y="0" x="0">18 Emmy<tspan baseline-shift="super" style="font-size:13px;">&#174;</tspan></text>
+              <text class="line line2  " y="23" x="0">nominations</text>
+            </g> -->
+
+          </g>
+
+        </svg>
+      </div>
+    </div>
+
+    <!-- <div class="frame5 frame banner" >
+      <div class="svg-mask-wrapper">
+        <svg width="728" height="90" viewbox="0 0 728 90"  version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+          <defs>
+            <mask id="svg-maskff5" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse">
+                <rect id="svg-mask-poly5" x="0" y="-971" width="1047" height="2700" transform="rotate(15)" style="fill: #fff"/>
+            </mask>
+          </defs>
+          
+          <g mask="url(#svg-maskff5)">
+
+            <rect class="rect" x="0" y="0" width="100%" height="100%" transform="rotate(0)" style="fill: #f2410a"/>          
+            <image id="img05" width="100%" height="100%" y="0" x="0" xlink:href="img05.png" transform="matrix(1,0,0,1,0,0)"/>
+            <image id="disc01" width="100%" height="100%" y="0" x="0" xlink:href="disc01.png" transform="matrix(1,0,0,1,0,0)"/>
+            <image class="ribbon ribbon-1" width="100%" height="100%" y="0" x="0" xlink:href="ribbon03.png" transform="matrix(1,0,0,1,0,0)"/>
+  
+            <g class="unselectable copy copy1" transform="translate(200 53)">            
+              <text class="line line1  " y="0" x="0">Settle in with the</text>
+              <text class="line line2  " y="-14" x="245">world's best drama</text>
+              <text class="line line3  " y="14" x="245">CONTRACT</text>
+            </g>
+
+          </g>
+
+        </svg>
+      </div>
+    </div> -->
+
+    <div class="common frame banner" style="display: block; opacity: 1;">
+      <div class="svg-mask-wrapper">
+        <svg width="728" height="90" viewBox="0 0 728 90" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+          <defs>
+            <mask id="svg-maskff7" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse">
+              <rect id="svg-mask-poly7" x="-747" y="-971" width="1047" height="2700" transform="rotate(15)" style="fill: #fff"></rect>
+            </mask>
+          </defs>
+
+          <g>
+              <!-- <rect class="previewbg" x="0" y="0" width="100%" height="100%" style="fill:#f2410a"></rect> -->
+              <image width="100%" height="100%" y="0" x="0" xlink:href="foxtelLogo.png"></image>
+          </g>
+
+        </svg>
+      </div>
+    </div>
+
+
+
+
+    <!--div id="banner-border" class="banner"></div-->
+    <div id="bg-exit" class="banner"></div>
+           
+  </div>
+
+<script src="./Enabler.js.download"></script>
+<script src="./tweenmax_1.20.4_3dc5474a75410cb768741e402b80d908_min.js.download"></script>
+<script src="./jquery.min.js(1).download"></script>
+<script src="./common.js.download"></script>
+<script src="./main.js(5).download"></script>
+
+<script type="text/javascript">
+$(function() {
+  if (Enabler.isInitialized()) {
+    init();
+  } else {
+    Enabler.addEventListener(studio.events.StudioEvent.INIT, init);
+  }
+
+  // Runs when Enabler is ready.
+  function init() {
+    if (Enabler.isPageLoaded()) {
+      politeInit();
+    } else {
+      Enabler.addEventListener(studio.events.StudioEvent.PAGE_LOADED, politeInit);
+    }
+  };
+
+  // Runs when the page is completely loaded.
+  function politeInit(){
+    // Add your code to hide any loading image or animation and load creative
+    // assets or begin creative animation.
+    //preloadImages();
+    //subloadImages();
+  };
+  
+  function bgExitHandler(e) {
+   // Enabler.exit('Background Exit');
+   window.open(window.clickTag);
+  }
+
+  document.getElementById('bg-exit').addEventListener('click', bgExitHandler, false);
+
+  preloadImages();
+});
+
+</script>
+
+
+
+</body></html>

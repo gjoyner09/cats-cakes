@@ -1,0 +1,37 @@
+
+var ftGUID_4989667="4560075B707BBD";
+var ftConfID_4989667="22408552";
+var ftParams_4989667="ftx=&fty=&ftadz=&ftscw=&ft_custom=&ftOBA=1&ft_agentEnv=0&ft_referrer=https%3A%2F%2Fwww.cookinglight.com%2Frecipes%2Fchocolate-and-cream-layer-cake&gdpr=${GDPR}&gdpr_consent=&gdpr_pd=${GDPR_PD}&us_privacy=${US_PRIVACY}&cachebuster=827894.3109528265";
+var ftKeyword_4989667="";
+var ftCustom_4989667="";
+var ftSection_4989667="";
+var ftSegment_4989667="";
+var ftSegmentList_4989667=[];
+var ftRuleMatch_4989667="10000100";
+var ftTimestamp_4989667="1603340689";
+var ftGeoC2_4989667="au";
+var ftGeoState_4989667="nsw";
+var ftGeoCity_4989667="ultimo";
+var ftISP_4989667="aapt limited";
+var ftSpeed_4989667="broadband";
+var ftDMA_4989667="36117";
+var ftLong_4989667="151.2";
+var ftLat_4989667="-33.88";
+var ftPostal_4989667="2007";
+var ftTimeZone_4989667="1100";
+var ftMobileCarrier_4989667="";
+var ftImp4989667 = {};
+ftImp4989667.privacy = "x";
+ftImp4989667.guidAge = "118";
+ftImp4989667.impID = "E46ADA40-65BD-A6BD-5A17-186BC6200D72";
+ftImp4989667.duid = "FT:4560075B707BBD";
+ftImp4989667.ft_tpplid = "";
+ftImp4989667.ft_c = {};
+ftImp4989667.gdpr = "!!GDPR!";
+ftImp4989667.gdpr_consent = "";
+ftImp4989667.gdpr_pd = "!!GDPR_PD!";
+ftImp4989667.oob_consent = "";
+ftImp4989667.gdprStoredConsent = "";
+ftImp4989667.us_privacy = "!!US_PRIVACY!";
+
+document.write('<scr'+'ipt src="https://cdn.flashtalking.com/xre/498/4989667/3207029/js/j-4989667-3207029.js" id="ftscript_m4989667" name="ftscript_m4989667"></scr'+'ipt>');

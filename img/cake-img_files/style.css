@@ -1,0 +1,269 @@
+@font-face {
+	font-family: MuseoSansRounded500;
+	src: url("../fonts/MuseoSansRounded-500.woff");
+}
+
+@font-face {
+	font-family: MuseoSansRounded700;
+	src: url("../fonts/MuseoSansRounded-700.woff");
+}
+
+:root {
+	--max-headline-height: 65px;
+	--ad-height: 90px;
+	--ad-width: 728px;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body,
+#container {
+	color: white;
+	font-size: 20px;
+	font-family: MuseoSansRounded500, "Montserrat", "Roboto", Arial, Helvetica,
+		sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	-o-font-smoothing: antialiased;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none !important;
+	user-select: none;
+
+	width: var(--ad-width);
+	height: var(--ad-height);
+	margin: 0;
+	cursor: pointer;
+	z-index: 1;
+	position: absolute;
+	overflow: hidden;
+	color: #ffffff;
+	box-sizing: border-box;
+}
+
+strong {
+	font-family: MuseoSansRounded700;
+}
+
+.hidden {
+	opacity: 0;
+}
+
+.absolute {
+	position: absolute;
+}
+
+#backgroundImage {
+	width: 778px;
+	height: var(--ad-height);
+	position: absolute;
+	left: -1px;
+	top: -1px;
+	z-index: -1;
+}
+
+#container {
+	border: 1px solid #000;
+}
+
+#overlayLogo {
+	width: var(--ad-width);
+	height: var(--ad-height);
+	z-index: 5;
+}
+
+.spinnyBeamCont,
+.beam {
+	top: -340px;
+	left: -65px;
+	height: 1456px;
+	width: 1456px;
+	z-index: -1;
+}
+
+.headlineCopy {
+	left: 20px;
+	top: 17px;
+	width: 320px;
+	font-family: MuseoSansRounded500;
+	font-size: 27px;
+	text-align: left;
+	letter-spacing: -0.015em;
+	line-height: 1.05em;
+	font-weight: 700;
+}
+
+.sublineCopy {
+	top: 35px;
+	left: 12px;
+	width: 320px;
+	height: 20px;
+	font-family: MuseoSansRounded500;
+	font-size: 14px;
+	text-align: left;
+	letter-spacing: -0.01em;
+	line-height: 1.05em;
+	word-wrap: break-word;
+}
+
+.headline1,
+.subline1 {
+	width: 450px;
+}
+
+/* PROOF POINT STYLES */
+.proofHeadline {
+	font-size: 22px;
+	font-weight: 700;
+	text-align: left;
+	left: 10px;
+	top: 10px;
+}
+
+.proofIcon {
+	height: 25px;
+	left: 8px;
+	bottom: 21px;
+}
+
+.proofIconMiddle {
+	left: 188px;
+}
+
+.proofLarge {
+	font-size: 34px;
+	font-weight: 700;
+	text-align: left;
+	left: 28px;
+	bottom: 15px;
+}
+
+.proofLargeMiddle {
+	left: 210px;
+	bottom: 15px;
+}
+
+.proofLargeBottom {
+	left: 8px;
+}
+
+.proofSmall {
+	font-size: 12px;
+	text-align: left;
+	bottom: 18px;
+	left: 122px;
+	width: 90px;
+}
+
+#cta {
+	font-family: MuseoSansRounded500;
+	right: 210px;
+	bottom: 40px;
+	background-color: #da304d;
+	font-size: 14px;
+	font-weight: bold;
+	padding: 9px 16px 9px 17px;
+	border-radius: 30px;
+	letter-spacing: 0.02em;
+	min-width: 110px;
+	text-align: center;
+	white-space: nowrap;
+	overflow: hidden;
+	transition: all 0.25s;
+}
+
+.ctaHover {
+	box-shadow: 0px 3px 0px #fff;
+	margin-bottom: 3px;
+}
+
+.terms {
+	bottom: 15px;
+	right: 205px;
+	font-size: 9px;
+	font-weight: bold;
+	letter-spacing: -0.03em;
+	width: 110px;
+	padding: 5px;
+	padding-left: 0;
+	cursor: pointer;
+	text-align: left;
+	z-index: 2;
+	color: #ffffff;
+}
+
+#disclaimerArrow {
+	padding: 0 3px 1px 0;
+}
+
+#termsFrame {
+	box-sizing: border-box;
+	width: var(--ad-width);
+	height: var(--ad-height);
+	position: absolute;
+	bottom: -310px;
+	padding: 20px 10px;
+	background: #005321;
+	z-index: 3;
+}
+
+#termsFrameClose {
+	color: white;
+	position: absolute;
+	left: 10px;
+	top: 5px;
+	z-index: 5;
+}
+
+.termsFrameText {
+	left: 0;
+	padding: 10px 10px;
+	width: var(--ad-width);
+	font-family: MuseoSansRounded500;
+	font-size: 24px;
+}
+
+#termsFrameText {
+	overflow-wrap: break-word;
+	min-height: var(--ad-height);
+}
+
+.termsFrameTextThree {
+	width: calc(300px - 10px * 2 - 20px);
+	padding: 10px 30px 10px 10px;
+}
+
+.cursorGlowDiv {
+	left: -100%;
+	top: -100%;
+	background-image: radial-gradient(
+		circle,
+		rgba(139, 198, 0, 0.6) 0%,
+		rgba(139, 198, 0, 0) 60%
+	);
+	height: 300px;
+	width: 300px;
+	position: absolute;
+	pointer-events: none;
+	z-index: -1;
+}
+
+/*Firefox only*/
+/* @supports (-moz-appearance:none) {
+	.cta {
+		left: 25px;
+		padding: 8px 16px 10px 17px;
+	}
+} */
+
+/*IE only*/
+/* @media screen and (-ms-high-contrast: active),
+(-ms-high-contrast: none) {
+	.cta {
+		left: 25px;
+		padding: 8px 16px 10px 17px;
+	}
+} */
