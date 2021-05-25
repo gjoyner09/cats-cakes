@@ -1,7 +1,15 @@
 # About
 
-A website for the business Cat's Cakes
+A website for the fictitious business Cat's Cakes
 
-## How to run
+## Purpose
 
-Open "index.html" in your browser
+To practice HTML and CSS
+
+## Deployment
+
+https://catscakes.netlify.app/
+
+## Author
+
+Grey Joyner
